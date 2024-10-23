@@ -62,8 +62,8 @@
         async function fetchAndCalculate() {
             const urls = [
                 "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss",
-                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.html",
-                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/README.smdl"
+                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/README.smdl",
+                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.html"
             ];
 
             const results = await Promise.all(urls.map(url => fetch(url).then(res => res.text())));
