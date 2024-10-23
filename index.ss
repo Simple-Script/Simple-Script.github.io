@@ -1,7 +1,4 @@
 sigma(This language is very small and is mainly used in python. I have ideas to make it a markdown language and improve the syntax.)
-"runhtml"
-# File Character Percentage Visualization
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,4 +65,3 @@ sigma(This language is very small and is mainly used in python. I have ideas to 
 
 </body>
 </html>
-"runhtml"
