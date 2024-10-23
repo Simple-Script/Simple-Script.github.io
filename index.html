@@ -1,14 +1,30 @@
-# GitHub File Reader Script
+# GitHub File Reader
 
-<script>
-    fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
-        .then(response => response.text())
-        .then(data => {
-            const regex = /sigma\((.*?)\)/g;
-            let match;
-            while ((match = regex.exec(data)) !== null) {
-                console.log(match[1]);
-            }
-        })
-        .catch(error => console.error('Error fetching the file:', error));
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub File Reader</title>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
+            .then(response => response.text())
+            .then(data => {
+                const regex = /sigma\((.*?)\)/g;
+                let matches;
+                let output = '';
+
+                while ((matches = regex.exec(data)) !== null) {
+                    output += matches[1] + '<br>';
+                }
+
+                document.getElementById('output').innerHTML = output;
+            })
+            .catch(error => console.error('Error fetching the file:', error));
+    </script>
+</body>
+</html>
