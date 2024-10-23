@@ -48,7 +48,7 @@ sigma(This language is very small and is mainly used in python. I have ideas to 
         
         const visualization = document.getElementById('visualization');
         const fileTypes = ['.ss', '.html', '.smdl'];
-        const colors = ['blue', 'red', 'purple'];
+        const colors = ['blue', 'pink', 'purple'];
 
         lengths.forEach((length, index) => {
             const percentage = (length / totalLength) * 100;
