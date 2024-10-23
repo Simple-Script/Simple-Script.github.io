@@ -29,63 +29,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Script Character Count</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
         .bar {
             display: flex;
             height: 30px;
-            margin: 10px 0;
+            width: 100%;
+            background-color: #e0e0e0;
+            position: relative;
         }
-        .smdl {
-            background-color: purple;
+        .segment {
+            height: 100%;
+            position: relative;
         }
-        .html {
-            background-color: red;
-        }
-        .ss {
-            background-color: blue;
+        .html { background-color: pink; }
+        .ss { background-color: blue; }
+        .smdl { background-color: purple; }
+        .label {
+            position: absolute;
+            right: 5px;
+            color: white;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <div class="bar" id="progressBar"></div>
 
-<div id="visualization"></div>
+    <script>
+        async function fetchAndCalculate() {
+            const urls = [
+                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss",
+                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.html",
+                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/README.smdl"
+            ];
 
-<script>
-    const urls = [
-        "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss",
-        "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.html",
-        "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/README.smdl"
-    ];
+            const results = await Promise.all(urls.map(url => fetch(url).then(res => res.text())));
+            const lengths = results.map(text => text.length);
+            const totalLength = lengths.reduce((a, b) => a + b, 0);
+            const percentages = lengths.map(length => (length / totalLength) * 100);
 
-    async function fetchData(url) {
-        const response = await fetch(url);
-        return await response.text();
-    }
+            const bar = document.getElementById('progressBar');
+            const colors = ['ss', 'smdl', 'html'];
+            const labels = ['SS', 'SMDL', 'HTML'];
 
-    async function visualize() {
-        const results = await Promise.all(urls.map(fetchData));
-        const lengths = results.map(text => text.length);
-        const totalLength = lengths.reduce((a, b) => a + b, 0);
-        
-        const visualization = document.getElementById('visualization');
-        const fileTypes = ['.ss', '.html', '.smdl'];
-        const colors = ['blue', 'pink', 'purple'];
+            percentages.forEach((percentage, index) => {
+                const segment = document.createElement('div');
+                segment.className = `segment ${colors[index]}`;
+                segment.style.width = `${percentage}%`;
+                segment.innerHTML = `<span class="label">${labels[index]}: ${percentage.toFixed(2)}%</span>`;
+                bar.appendChild(segment);
+            });
+        }
 
-        lengths.forEach((length, index) => {
-            const percentage = (length / totalLength) * 100;
-            const bar = document.createElement('div');
-            bar.className = 'bar ' + fileTypes[index].slice(1);
-            bar.style.width = percentage + '%';
-            bar.textContent = `${fileTypes[index]}: ${percentage.toFixed(2)}%`;
-            visualization.appendChild(bar);
-        });
-    }
-
-    visualize();
-</script>
-
+        fetchAndCalculate();
+    </script>
 </body>
 </html>
