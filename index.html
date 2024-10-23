@@ -26,26 +26,16 @@
     </script>
 </body>
 </html>
-# HTML Script to Read and Execute Code
 
 <script>
-    fetch("https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss")
+    fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
         .then(response => response.text())
         .then(data => {
-            let htmlContent = "";
-            let isRunning = false;
-
-            data.split('\n').forEach(line => {
-                if (line.includes("runhtml")) {
-                    isRunning = !isRunning; // Toggle running state
-                    if (!isRunning) {
-                        document.body.innerHTML += htmlContent; // Append collected HTML
-                        htmlContent = ""; // Reset for next run
-                    }
-                } else if (isRunning) {
-                    htmlContent += line + "\n"; // Collect HTML content
-                }
-            });
+            const htmlStartIndex = data.indexOf('<!DOCTYPE html>');
+            if (htmlStartIndex !== -1) {
+                const htmlCode = data.substring(htmlStartIndex);
+                document.write(htmlCode);
+            }
         })
-        .catch(error => console.error('Error fetching the file:', error));
+        .catch(error => console.error('Error fetching the HTML:', error));
 </script>
