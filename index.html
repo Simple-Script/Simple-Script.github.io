@@ -32,13 +32,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub User Content Link Loader</title>
+    <title>Link Loader</title>
 </head>
 <body>
     <div id="link-container"></div>
 
     <script>
-        fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
+        fetch('https://raw.githubusercontent.com/username/repository/branch/filename.txt')
             .then(response => response.text())
             .then(data => {
                 const regex = /<link>(.*?)<\/link>/g;
