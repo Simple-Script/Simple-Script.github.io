@@ -23,7 +23,7 @@
                     const buttonLink = link.split('-')[1];
                     const button = document.createElement('button');
                     button.innerText = buttonText;
-                    button.onclick = () => window.open(`https://${buttonLink}`, '_self');
+                    button.onclick = () => window.open(`${buttonLink}`, '_self');
                     document.body.appendChild(button);
                 }
             })
