@@ -11,7 +11,7 @@ def open_file():
         with open(file_path, 'r') as file:
             content = file.read()
         
-        html_file_path = "output.html"
+        html_file_path = "output.ss"
         with open(html_file_path, 'w') as html_file:
             html_file.write(content)
         
