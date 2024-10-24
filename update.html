@@ -7,11 +7,11 @@
     <script>
         async function checkFiles() {
             const urls = [
-                'https://raw.githubusercontent.com/user/repo1/branch/file1.txt',
+                'https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/download/versions/1.0.ss',
                 'https://raw.githubusercontent.com/user/repo2/branch/file2.txt',
                 'https://raw.githubusercontent.com/user/repo3/branch/file3.txt'
             ];
-            const shouldRedirect = [false, false, false]; // Set to true if you want to check "yes"
+            const shouldRedirect = [true, false, false]; // Set to true if you want to check "yes"
 
             for (let i = 0; i < urls.length; i++) {
                 const response = await fetch(urls[i]);
