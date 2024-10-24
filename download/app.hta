@@ -2,106 +2,43 @@
 <HTA:APPLICATION ID="My Calculator" ICON="Yahoo.ico" MAXIMIZEBUTTON="no" border="thin" showInTaskbar="yes" innerBorder="no" reseize="no" scroll="no" singleInstance="yes" selection="no" version="1.0" />
 <TITLE>My Calculator</TITLE>
 </HEAD>
-    <script>
-        fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
-            .then(response => response.text())
-            .then(data => {
-                const regex = /text\((.*?)\)/g;
-                let matches;
-                let output = '';
-
-                while ((matches = regex.exec(data)) !== null) {
-                    output += matches[1] + '<br>';
-                }
-
-                document.getElementById('output').innerHTML = output;
-            })
-            .catch(error => console.error('Error fetching the file:', error));
-    </script>
-    <style>
-        .redirect-link {
-            color: blue;
-            text-decoration: underline;
-        }
-    </style>
-    <script>
-        async function fetchGitHubFile() {
-            const response = await fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss');
-            const text = await response.text();
-            const regex = /https:\/\/[^\s]+/g;
-            const matches = text.match(regex);
-            const contentDiv = document.getElementById('content');
-
-            if (matches) {
-                matches.forEach(url => {
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.className = 'redirect-link';
-                    link.target = '_blank';
-                    link.innerText = url;
-                    contentDiv.appendChild(link);
-                    contentDiv.appendChild(document.createElement('br'));
-                });
-            } else {
-                contentDiv.innerText = 'No links found.';
-            }
-        }
-
-        fetchGitHubFile();
-    </script>
-    <style>
-        .bar {
-            display: flex;
-            height: 40px;
-            width: 100%;
-            background-color: #e0e0e0;
-            position: fixed;
-            bottom: 10;
-        }
-        .segment {
-            height: 100%;
-            position: relative;
-        }
-        .html { background-color: pink; }
-        .ss { background-color: blue; }
-        .smdl { background-color: purple; }
-        .label {
-            position: absolute;
-            right: 5px;
-            color: white;
-            font-weight: bold;
-        }
-    </style>
-    <script>
-        async function fetchAndCalculate() {
-            const urls = [
-                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss",
-                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/README.smdl",
-                "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.html"
-            ];
-
-            const results = await Promise.all(urls.map(url => fetch(url).then(res => res.text())));
-            const lengths = results.map(text => text.length);
-            const totalLength = lengths.reduce((a, b) => a + b, 0);
-            const percentages = lengths.map(length => (length / totalLength) * 100);
-
-            const bar = document.getElementById('progressBar');
-            const colors = ['ss', 'smdl', 'html'];
-            const labels = ['SS', 'SMDL', 'HTML'];
-
-            percentages.forEach((percentage, index) => {
-                const segment = document.createElement('div');
-                segment.className = `segment ${colors[index]}`;
-                segment.style.width = `${percentage}%`;
-                segment.innerHTML = `<span class="label">${labels[index]}: ${percentage.toFixed(2)}%</span>`;
-                bar.appendChild(segment);
-            });
-        }
-
-        fetchAndCalculate();
-    </script>
+<script language="javascript">
+	window.resizeTo(350, 350);
+	isClear = true;
+	function insertValue(value) {
+		if (isClear == true){
+			document.getElementById("txtDisplay").value = value
+			isClear = false
+		} else {
+			document.getElementById("txtDisplay").value += value
+		}
+	}
+	function clearValue() {
+		document.getElementById("txtDisplay").value = "0";
+		isClear = true;
+	}
+	function evalStatement() {
+		document.getElementById("txtDisplay").value = eval(document.getElementById("txtDisplay").value)
+	}
+</script>
 <BODY>
 	<div style="text-align: center">
-		
+		<input type="text" id="txtDisplay" style="font-size: 24px; width: 220px; text-align: right" value="0" /><br /><br />
+		<input type="button" style="height:50px;width:50px" value="7" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="8" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="9" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="*" onclick="insertValue(this.value)"></input><br />
+		<input type="button" style="height:50px;width:50px" value="4" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="5" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="6" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="-" onclick="insertValue(this.value)"></input><br />
+		<input type="button" style="height:50px;width:50px" value="1" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="2" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="3" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="+" onclick="insertValue(this.value)"></input><br />
+		<input type="button" style="height:50px;width:50px" value="CLR" onclick="clearValue()"></input>
+		<input type="button" style="height:50px;width:50px" value="0" onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="." onclick="insertValue(this.value)"></input>
+		<input type="button" style="height:50px;width:50px" value="="  onclick="evalStatement()"></input><br />
 	</div>
 </BODY></HTML>
