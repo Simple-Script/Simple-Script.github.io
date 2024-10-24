@@ -32,30 +32,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Loader</title>
+    <title>GitHub File Reader</title>
+    <script>
+        function parseContent(content) {
+            const linkRegex = /<l=(.*?)=(.*?)>/g;
+            const textLinkRegex = /<textl=(.*?)<(.*?)=textl>/g;
+
+            content = content.replace(linkRegex, (match, p1, p2) => {
+                return `<a href="${p1}" target="_blank">Redirect</a>`;
+            });
+
+            content = content.replace(textLinkRegex, (match, p1, p2) => {
+                return `<a href="${p2}" target="_blank">${p1}</a>`;
+            });
+
+            document.getElementById('output').innerHTML = content;
+        }
+
+        window.onload = function() {
+            const rawContent = `<l=https://example.com=example.com>
+                                <textl=example<https://example.com=textl>`;
+            parseContent(rawContent);
+        };
+    </script>
 </head>
 <body>
-    <div id="links"></div>
-
-    <script>
-        fetch('https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss')
-            .then(response => response.text())
-            .then(data => {
-                const regex = /<link=(.+?)=link>/g;
-                let match;
-                const linksContainer = document.getElementById('links');
-
-                while ((match = regex.exec(data)) !== null) {
-                    const link = document.createElement('a');
-                    link.href = match[1];
-                    link.textContent = match[1];
-                    link.target = '_blank';
-                    linksContainer.appendChild(link);
-                    linksContainer.appendChild(document.createElement('br'));
-                }
-            })
-            .catch(error => console.error('Error fetching the file:', error));
-    </script>
+    <div id="output"></div>
 </body>
 </html>
 
