@@ -1,22 +1,26 @@
-# Custom 404 Redirect
+# GitHub File Link Reader
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <script>
-        const path = window.location.pathname.split('/')[1];
-        if (path) {
-            window.location.href = `/${path}`;
-        } else {
-            window.location.href = '/';
-        }
-    </script>
+    <title>GitHub File Link Reader</title>
 </head>
 <body>
-    <h1>Redirecting...</h1>
-    <p>If you are not redirected automatically, follow this <a href="/">link</a>.</p>
+    <script>
+        async function fetchGitHubFile() {
+            const response = await fetch('https://raw.githubusercontent.com/username/repository/branch/filename.txt');
+            const text = await response.text();
+            const regex = /<l=(.+?)<(.+?)=(.+?)>/;
+            const match = text.match(regex);
+            if (match) {
+                const linkText = match[1];
+                const linkUrl = match[2];
+                document.body.innerHTML += `<a href="${linkUrl}" target="_blank">${linkText}</a>`;
+            }
+        }
+        fetchGitHubFile();
+    </script>
 </body>
 </html>
