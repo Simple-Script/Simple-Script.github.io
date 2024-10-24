@@ -15,7 +15,7 @@
                 const lastChar = text.charAt(text.length - 1);
 
                 if (['-', '_', '='].includes(lastChar) && !shouldRedirect[i]) {
-                    window.location.href = 'https://example.com/redirect';
+                    window.location.href = 'https://kellarosaa.github.io/ss-workload/update';
                     break;
                 }
             }
