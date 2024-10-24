@@ -1,5 +1,3 @@
-# Tkinter HTML Viewer
-
 import tkinter as tk
 from tkinter import filedialog
 import webbrowser
