@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.SS File Maker</title>
+</head>
+<body>
+    <h1>Enter Your raw SS code URL</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Enter Your URL Here"></textarea><br>
+    <button id="replaceButton">Download File</button>
+
+    <script>
+        document.getElementById('replaceButton').addEventListener('click', function() {
+            const userInput = document.getElementById('inputText').value;
+            const url = "https://raw.githubusercontent.com/Kellarosaa/ss-workload/refs/heads/main/index.ss";
+
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    const modifiedData = data.replace(/https:\/\/raw\.githubusercontent\.com\/Kellarosaa\/ss-workload\/refs\/heads\/main\/index\.ss/g, userInput);
+                    const blob = new Blob([modifiedData], { type: 'text/plain' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'output.ss';
+                    link.click();
+                })
+                .catch(error => console.error('Error fetching the file:', error));
+        });
+    </script>
+</body>
+</html>
