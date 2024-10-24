@@ -3,4 +3,4 @@ text(Everything on this site will be built in this language.)
 https://kellarosaa.github.io/ss-workload/
 button(click here!)-example.com
 openbutton(here)-example.com
-redirectbutton(dog)-example.com
+redirbutton(dog)-example.com
