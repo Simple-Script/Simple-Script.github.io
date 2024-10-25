@@ -16,8 +16,8 @@
                 let match;
                 while ((match = regex.exec(data)) !== null) {
                     const [fullMatch, link] = match;
-                    const buttonText = link.split('-')[0];
-                    const buttonLink = link.split('-')[1];
+                    const buttonText = link.split('=')[0];
+                    const buttonLink = link.split('=')[1];
                     const button = document.createElement('button');
                     button.innerText = buttonText;
                     button.onclick = () => window.open(`https://${buttonLink}`, '_self');
