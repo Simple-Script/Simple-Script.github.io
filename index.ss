@@ -1,4 +1,5 @@
 text(Welcome to the SimpleScript home page. There are a bunch of tools to use and you can download this open source software.)
+button(About This Language=kellarosaa.github.io/SimpleScript/documentation/)
 button(Download=kellarosaa.github.io/SimpleScript/download/)
 button(Patch Notes=kellarosaa.github.io/SimpleScript/patch/)
 button(Help=kellarosaa.github.io/SimpleScript/help/)
