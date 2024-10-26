@@ -18,7 +18,7 @@
             fetch(url)
                 .then(response => response.text())
                 .then(data => {
-                    const modifiedData = data.replace(/https:\/\/raw\.githubusercontent\.com\/Kellarosaa\/ss-workload\/refs\/heads\/main\/index\.ss/g, userInput);
+                    const modifiedData = data.replace(/https:\/\/raw\.githubusercontent\.com\/Kellarosaa\/SimpleScript\/refs\/heads\/main\/index\.ss/g, userInput);
                     const blob = new Blob([modifiedData], { type: 'text/plain' });
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
