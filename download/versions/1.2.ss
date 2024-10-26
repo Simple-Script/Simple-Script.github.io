@@ -39,7 +39,7 @@
     <div id="image-container"></div>
 
     <script>
-        fetch('https://raw.githubusercontent.com/Kellarosaa/SimpleScript/refs/heads/main/test.ss')
+        fetch('https://raw.githubusercontent.com/Kellarosaa/SimpleScript/refs/heads/main/index.ss')
             .then(response => response.text())
             .then(data => {
                 const regex = /image\((https:\/\/raw\.githubusercontent\.com\/[^\)]+)\)/;
