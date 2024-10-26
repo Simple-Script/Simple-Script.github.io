@@ -4,5 +4,6 @@ text(To do this you can go to downloads then download the newest version. Then g
 text(Then download the compiler, zip or exe it doesn't matter then run the exe as admininistrator, if you don't want to run it as admin download the zip or look through the "ss-compiler.py" in the repo. Then open the "output.ss" file using the tool. now you can run your code and it can be edited from the repo or where your code url is stored.)
 text(Step-2-How to Code)
 text(Making text-type the "text()" command and put your text inside of the parentheses to display it on your site.)
-text(Hyperlinks-type https:// then your link to create a blue hyperlink.)
+text(Hyperlinks-https:// + link to create a blue hyperlink.)
 text(button links-button(example=example.com))
+text(type image(image.jpg))
