@@ -5,3 +5,4 @@ text(Then download the compiler, zip or exe it doesn't matter then run the exe a
 text(Step-2-How to Code)
 text(Making text-type the "text()" command and put your text inside of the parentheses to display it on your site.)
 text(Hyperlinks-type https:// then your link to create a blue hyperlink.)
+text(button links-button(example=example.com)
