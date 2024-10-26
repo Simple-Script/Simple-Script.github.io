@@ -2,3 +2,4 @@ text(Welcome to the SimpleScript home page. There are a bunch of tools to use an
 button(Download=kellarosaa.github.io/SimpleScript/download/)
 button(Patch Notes=kellarosaa.github.io/SimpleScript/patch/)
 button(Help=kellarosaa.github.io/SimpleScript/help/)
+button(GitHub Code=https://github.com/Kellarosaa/SimpleScript.git)
