@@ -2,7 +2,7 @@
 
 import requests
 
-url = 'https://raw.githubusercontent.com/Kellarosaa/SimpleScript/refs/heads/main/update'
+url = 'https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/refs/heads/main/update'
 response = requests.get(url)
 
 if response.status_code == 200:
