@@ -2,4 +2,4 @@ text(Here is the download page where you can get the SimpleScript code and softw
 button(SimpleScript interpreter=Simple-Script.github.io/download/versions/)
 button(.ss compiler=Simple-Script.github.io/download/installers/)
 button(.ss file maker=Simple-Script.github.io/download/ss-make/)
-button(.ss file maker=Simple-Script.github.io/download/ss-view/)
+button(.ss file viewer=Simple-Script.github.io/download/ss-view/)
