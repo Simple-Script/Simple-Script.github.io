@@ -1,0 +1,23 @@
+# Static Site Generator
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Site Generator</title>
+    <script>
+        function generateSite() {
+            const userCode = document.getElementById('userCode').value;
+            const blob = new Blob([userCode], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+        }
+    </script>
+</head>
+<body>
+    <h1>Static Site Generator</h1>
+    <textarea id="userCode" rows="10" cols="50" placeholder="Enter your HTML code here..."></textarea><br>
+    <button onclick="generateSite()">Go</button>
+</body>
+</html>
