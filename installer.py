@@ -14,9 +14,9 @@ class FileDownloader:
         self.url_list = [
             "https://github.com/Simple-Script/Simple-Script.github.io/raw/refs/heads/main/download/installers/1.1.exe",
             "https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/refs/heads/main/documentation/index.html",
-            "https://raw.githubusercontent.com/user/repo/branch/file3.txt"
+            "https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/refs/heads/main/download/versions/1.2.ss"
         ]
-        self.file_names = ["compiler.exe", "documentation.html", "file3.txt"]
+        self.file_names = ["compiler.exe", "documentation.html", "stable-release.html"]
 
         self.progress = ttk.Progressbar(self.frame, orient="horizontal", length=300, mode="determinate")
         self.progress.grid(row=0, column=0, pady=10)
