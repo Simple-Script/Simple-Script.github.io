@@ -12,7 +12,7 @@ class FileDownloader:
         self.frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
         self.url_list = [
-            "https://raw.githubusercontent.com/user/repo/branch/file1.txt",
+            "https://github.com/Simple-Script/Simple-Script.github.io/raw/refs/heads/main/download/installers/1.1.exe",
             "https://raw.githubusercontent.com/user/repo/branch/file2.txt",
             "https://raw.githubusercontent.com/user/repo/branch/file3.txt"
         ]
