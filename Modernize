@@ -1,25 +1,30 @@
-// Function to replace specific words on a web page
-function replaceWords() {
-    const bodyText = document.body.innerHTML;
-    const updatedText = bodyText
-        .replace(/thing/g, 'jawn')
-        .replace(/things/g, 'jawns');
-        .replace(/Thing/g, 'Jawn')
-        .replace(/Things/g, 'Jawns');
-        .replace(/going to/g, 'finna');
-        .replace(/Going to/g, 'Finna');
-        .replace(/butts/g, 'gyatts');
-        .replace(/butt/g, 'gyatt');
-        .replace(/Butts/g, 'Gyatts');
-        .replace(/Butt/g, 'Gyatt');
-        .replace(/slang/g, 'brainrot');
-        .replace(/Slang/g, 'Brainrot');
-        .replace(/takes/g, 'fanum taxes');
-        .replace(/take/g, 'fanum tax');
-        .replace(/Takes/g, 'Fanum taxes');
-        .replace(/Take/g, 'Fanum tax');
-    document.body.innerHTML = updatedText;
-}
+# Word Replacement Script
 
-// Execute the function
-replaceWords();
+(function() {
+    const replacements = {
+        "thing": "jawn",
+        "Thing": "Jawn",
+        "BUTT": "GYATT",
+        "Butt": "Gyatt",
+        // Add 10 more words here
+        "example1": "replacement1",
+        "example2": "replacement2",
+        "example3": "replacement3",
+        "example4": "replacement4",
+        "example5": "replacement5",
+        "example6": "replacement6",
+        "example7": "replacement7",
+        "example8": "replacement8",
+        "example9": "replacement9",
+        "example10": "replacement10"
+    };
+
+    const bodyText = document.body.innerHTML;
+
+    for (const [key, value] of Object.entries(replacements)) {
+        const regex = new RegExp(key, 'gi');
+        bodyText.replace(regex, value);
+    }
+
+    document.body.innerHTML = bodyText;
+})();
