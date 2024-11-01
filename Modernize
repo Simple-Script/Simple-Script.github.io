@@ -4,9 +4,20 @@ function replaceWords() {
     const updatedText = bodyText
         .replace(/thing/g, 'jawn')
         .replace(/things/g, 'jawns');
+        .replace(/Thing/g, 'Jawn')
+        .replace(/Things/g, 'Jawns');
         .replace(/going to/g, 'finna');
+        .replace(/Going to/g, 'Finna');
         .replace(/butts/g, 'gyatts');
         .replace(/butt/g, 'gyatt');
+        .replace(/Butts/g, 'Gyatts');
+        .replace(/Butt/g, 'Gyatt');
+        .replace(/slang/g, 'brainrot');
+        .replace(/Slang/g, 'Brainrot');
+        .replace(/takes/g, 'fanum taxes');
+        .replace(/take/g, 'fanum tax');
+        .replace(/Takes/g, 'Fanum taxes');
+        .replace(/Take/g, 'Fanum tax');
     document.body.innerHTML = updatedText;
 }
 
