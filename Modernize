@@ -1,0 +1,11 @@
+// Function to replace specific words on a web page
+function replaceWords() {
+    const bodyText = document.body.innerHTML;
+    const updatedText = bodyText
+        .replace(/thing/g, 'jawn')
+        .replace(/butt/g, 'gyatt');
+    document.body.innerHTML = updatedText;
+}
+
+// Execute the function
+replaceWords();
