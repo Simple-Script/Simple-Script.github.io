@@ -3,6 +3,9 @@ function replaceWords() {
     const bodyText = document.body.innerHTML;
     const updatedText = bodyText
         .replace(/thing/g, 'jawn')
+        .replace(/things/g, 'jawns');
+        .replace(/going to/g, 'finna');
+        .replace(/butts/g, 'gyatts');
         .replace(/butt/g, 'gyatt');
     document.body.innerHTML = updatedText;
 }
