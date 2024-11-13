@@ -18,10 +18,10 @@ class FullscreenApp:
         self.button_paths = [
             r"C:\Users\Kella\Desktop\Fortnite.url", r"C:\Users\Kella\Desktop\Roblox Player.lnk",
             r"C:\Users\YourUsername\Desktop\app3.exe", r"C:\Users\YourUsername\Desktop\app4.exe",
-            r"C:\Users\YourUsername\Desktop\app5.exe", r"C:\Users\YourUsername\Desktop\app6.exe",
+            r"C:\Users\YourUsername\Desktop\app5.exe", r"C:\Users\Kella\Desktop\Fortnite.url",
             r"C:\Users\YourUsername\Desktop\app7.exe", r"C:\Users\YourUsername\Desktop\app8.exe",
             r"C:\Users\YourUsername\Desktop\app9.exe", r"C:\Users\YourUsername\Desktop\app10.exe",
-            r"C:\Users\YourUsername\Desktop\app11.exe", r"C:\Users\YourUsername\Desktop\app12.exe",
+            r"C:\Users\Kella\Desktop\Roblox Player.lnk", r"C:\Users\YourUsername\Desktop\app12.exe",
             r"C:\Users\YourUsername\Desktop\app13.exe", r"C:\Users\YourUsername\Desktop\app14.exe",
             r"C:\Users\YourUsername\Desktop\app15.exe", r"C:\Users\YourUsername\Desktop\app16.exe",
             r"C:\Users\YourUsername\Desktop\app17.exe", r"C:\Users\YourUsername\Desktop\app18.exe",
