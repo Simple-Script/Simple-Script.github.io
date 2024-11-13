@@ -13,7 +13,7 @@ class FullscreenApp:
             "Apex Legends", "Ark: Survival Ascended", "Ark: Survival Evolved", "Astroneer", "CS2",
             "Fortnite", "Forza Horizon 5", "Grounded", "Minecraft", "Minecraft Dungeons",
             "Roblox", "Rocket League", "Slime Rancher", "Trailmakers", "Valorant",
-            "Empty", "Empty", "Empty", "Empty", "Empty"
+            "Empty", "Empty", "Empty", "Empty", "AMD Adrenalin"
         ]
         self.button_paths = [
             r"C:\Users\Kella\Desktop\Fortnite.url", r"C:\Users\Kella\Desktop\Roblox Player.lnk",
