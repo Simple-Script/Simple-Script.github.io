@@ -10,9 +10,9 @@ class FullscreenApp:
 
         self.buttons = []
         self.button_names = [
-            "Fortnite", "Roblox", "Button 3", "Button 4", "Button 5",
-            "Button 6", "Button 7", "Button 8", "Button 9", "Button 10",
-            "Button 11", "Button 12", "Button 13", "Button 14", "Button 15",
+            "Apex Legends", "Ark: Survival Ascended", "Ark: Survival Evolved", "Astroneer", "CS2",
+            "Fortnite", "Forza Horizon 5", "Grounded", "Minecraft", "Minecraft Dungeons",
+            "Roblox", "Rocket League", "Slime Rancher", "Trailmakers", "Valorant",
             "Button 16", "Button 17", "Button 18", "Button 19", "Button 20"
         ]
         self.button_paths = [
