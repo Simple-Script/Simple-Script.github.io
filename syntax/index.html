@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read GitHub File</title>
+</head>
+<body>
+    <h1>Read Raw GitHub File</h1>
+    <textarea id="output" rows="20" cols="80" placeholder="Output will appear here..."></textarea>
+    <br>
+    <button id="fetchButton">Fetch File</button>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const url = 'https://raw.githubusercontent.com/username/repository/branch/filename.txt'; // Replace with your raw file URL
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').value = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching the file:', error);
+                });
+        });
+    </script>
+</body>
+</html>
