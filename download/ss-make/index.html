@@ -22,7 +22,7 @@
                     const blob = new Blob([modifiedData], { type: 'text/plain' });
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
-                    link.download = 'output.ss';
+                    link.download = 'index.html';
                     link.click();
                 })
                 .catch(error => console.error('Error fetching the file:', error));
