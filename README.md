@@ -4,7 +4,7 @@ Simple-Script is a sleek code language meant for beginners with a simple setup a
 
 ## Installation
 
-Click [install](https://Simple-Script.github.io/num-13/num-13.py) to install the script or use the bash command below.
+Click [install](https://Simple-Script.github.io/download/versions/1.2.ss) to install the language or use the bash command below.
 
 ```bash
 Invoke-WebRequest 'https://raw.githubusercontent.com/Simple-Script/num-13/main/num-13.py' -OutFile ./num-13.py
