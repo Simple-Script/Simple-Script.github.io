@@ -22,7 +22,7 @@ Go to [GitHub](https://github.com) and make a repository. Once made create an in
 
 ## How to create main file
 
-Navigate to the [website](https://Simple-Script.github.io) then follow the steps. download --> .ss file maker, once you get to that section input your githubusercontent file or any other raw file. Then download the output. Put this code in your index.html and edit the index.ss file to code on the site. Finally visit the [documentation](https://Simple-Script.github.io/documentation) to learn the language.
+Navigate to the [website](https://Simple-Script.github.io) then follow the steps. download --> .ss file maker, once you get to that section input your raw.githubusercontent.com file or any other raw file. Then download the output. Put this code in your index.html and edit the index.ss file to code on the site. Finally visit the [documentation](https://Simple-Script.github.io/documentation) to learn the language.
 
 ## License
 
