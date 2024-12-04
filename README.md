@@ -1,6 +1,6 @@
-# num-13
+# SimpleScript
 
-Simple-Script is a sleek code language meant for beginners with a simple setup and easy code process.
+SimpleScript is a sleek code language meant for beginners with a simple setup and easy code process.
 
 ## Installation
 
@@ -9,13 +9,16 @@ Click [install](https://Simple-Script.github.io/download/versions/1.2.ss) to ins
 ```bash
 Invoke-WebRequest 'https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/main/download/versions/1.2.ss' -OutFile ./simplescript.ss
 ```
-Click [install](https://Simple-Script.github.io/download/installers/1.1.exe) to install the compiler to test your code.
 
-## How to use
+Click [install](https://Simple-Script.github.io/download/installers/1.1.exe) to install the compiler to test your code or use the bash command to install.
 
-When you run the script it will request the number. once input the script will output the numbers status.
+```bash
+Invoke-WebRequest 'https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/main/download/installers/1.1.exe' -OutFile ./simplescript.exe
+```
 
-Updates will be released to improve the script.
+## How to create
+
+Navigate to the [website](https://Simple-Script.github.io) then follow the steps. download --> .ss file maker once you get to that section input your githubusercontent file or any other raw file. then download the output.
 
 ## License
 
