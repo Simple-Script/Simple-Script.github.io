@@ -9,7 +9,7 @@ Click [install](https://Simple-Script.github.io/download/versions/1.2.ss) to ins
 ```bash
 Invoke-WebRequest 'https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/main/download/versions/1.2.ss' -OutFile ./simplescript.ss
 ```
-Click [install](https://Simple-Script.github.io/download/installers/1.2.ss) to install the compiler to test your code.
+Click [install](https://Simple-Script.github.io/download/installers/1.1.exe) to install the compiler to test your code.
 
 ## How to use
 
