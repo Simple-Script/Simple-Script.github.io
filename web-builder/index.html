@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub File Uploader</title>
+    <title>Upload File to GitHub</title>
 </head>
 <body>
     <h1>Upload File to GitHub</h1>
@@ -18,36 +18,76 @@
     </form>
 
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-const token = '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'; // Replace with your token
-const repoOwner = 'Simple-Script'; // Replace with your GitHub username
-const repoName = 'Simple-Script.github.io'; // Replace with your repository name
-const filePath = 'web-builder/file.txt'; // Path where you want to create the file
-const fileContent = 'Hello, World!'; // Content of the file
+        const form = document.getElementById('uploadForm');
+        const token = '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'; // Replace with your token
+        const repoOwner = 'Simple-Script';
+        const repoName = 'Simple-Script.github.io';
 
-fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
-    method: 'PUT',
-    headers: {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        message: 'Adding a new file',
-        content: btoa(fileContent), // Base64 encode the content
-        branch: 'main' // Specify the branch if needed
-    })
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-})
-.then(data => {
-    console.log('File uploaded successfully:', data);
-})
-.catch(error => {
-    console.error('Error:', error);
-});
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const fileName = document.getElementById('fileName').value;
+            const fileContent = document.getElementById('fileContent').value;
+
+            const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
+            const encodedContent = btoa(fileContent); // Base64 encode the content
+
+            // Check if the file exists
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (response.status === 200) {
+                // File exists, update it
+                const data = await response.json();
+                const sha = data.sha; // Get the SHA of the existing file
+
+                const updateResponse = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Update ${fileName}`,
+                        content: encodedContent,
+                        sha: sha
+                    })
+                });
+
+                if (updateResponse.ok) {
+                    console.log('File updated successfully');
+                } else {
+                    console.error('Error updating file:', await updateResponse.json());
+                }
+            } else if (response.status === 404) {
+                // File does not exist, create it
+                const createResponse = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `Create ${fileName}`,
+                        content: encodedContent
+                    })
+                });
+
+                if (createResponse.ok) {
+                    console.log('File created successfully');
+                } else {
+                    console.error('Error creating file:', await createResponse.json());
+                }
+            } else {
+                console.error('Error fetching file:', await response.json());
+            }
+        });
+    </script>
+</body>
+</html>
