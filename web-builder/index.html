@@ -1,0 +1,52 @@
+# File Upload to GitHub Repository
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>Upload File to GitHub</h1>
+    <form id="fileUploadForm">
+        <label for="fileName">File Name:</label>
+        <input type="text" id="fileName" name="fileName" required>
+        <br><br>
+        <label for="fileContents">File Contents:</label>
+        <textarea id="fileContents" name="fileContents" required></textarea>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('fileUploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fileName = document.getElementById('fileName').value;
+            const fileContents = document.getElementById('fileContents').value;
+
+            const data = {
+                message: 'Creating a new file',
+                content: btoa(fileContents),
+                branch: 'main'
+            };
+
+            fetch(`https://api.github.com/repos/Simple-Script/Simple-Script.github.io/contents/${fileName}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'token YOUR_GITHUB_TOKEN',
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
