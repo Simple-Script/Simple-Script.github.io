@@ -20,38 +20,34 @@
     <script>
         document.getElementById('uploadForm').addEventListener('submit', async function(event) {
             event.preventDefault();
+const token = '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'; // Replace with your token
+const repoOwner = 'Simple-Script'; // Replace with your GitHub username
+const repoName = 'Simple-Script.github.io'; // Replace with your repository name
+const filePath = 'web-builder/file.txt'; // Path where you want to create the file
+const fileContent = 'Hello, World!'; // Content of the file
 
-            const fileName = document.getElementById('fileName').value;
-            const fileContent = document.getElementById('fileContent').value;
-
-            const token = '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'; // Replace with your token
-            const repoOwner = 'Simple-Script'; // Replace with your GitHub username
-            const repoName = 'Simple-Script.github.io'; // Replace with your repository name
-
-            const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${fileName}`;
-
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${token}`,
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Add ${fileName}`,
-                    content: btoa(fileContent), // Encode content to base64
-                    branch: 'main' // Specify the branch if needed
-                })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                alert('File uploaded successfully: ' + data.content.html_url);
-            } else {
-                const errorData = await response.json();
-                alert('Error: ' + errorData.message);
-            }
-        });
-    </script>
-</body>
-</html>
+fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+    method: 'PUT',
+    headers: {
+        'Authorization': `token ${token}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        message: 'Adding a new file',
+        content: btoa(fileContent), // Base64 encode the content
+        branch: 'main' // Specify the branch if needed
+    })
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('File uploaded successfully:', data);
+})
+.catch(error => {
+    console.error('Error:', error);
+});
