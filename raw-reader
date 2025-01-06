@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        async function fetchFileContent(url) {
+            const response = await fetch(url);
+            return await response.text();
+        }
+
+        async function readGitHubFile() {
+            const githubFileUrl = 'https://raw.githubusercontent.com/Simple-Script/Simple-Script.github.io/refs/heads/main/tets'; // Replace with actual URL
+            const fileContent = await fetchFileContent(githubFileUrl);
+            const links = fileContent.match(/https?:\/\/[^\s]+/g);
+
+            if (links) {
+                for (const link of links) {
+                    const webContent = await fetchFileContent(link);
+                   document.body.innerHTML += `<pre>${webContent}</pre>`;
+                }
+            } else {
+                document.body.innerHTML = '<p>No links found in the file.</p>';
+            }
+        }
+
+        window.onload = readGitHubFile;
+    </script>
+</head>
+</html>
