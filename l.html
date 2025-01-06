@@ -1,0 +1,39 @@
+# GitHub User Content Reader
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub User Content Reader</title>
+</head>
+<body>
+    <h1>GitHub User Content Reader</h1>
+    <input type="text" id="urlInput" placeholder="Enter raw.githubusercontent.com link">
+    <button id="fetchButton">Fetch Content</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const url = document.getElementById('urlInput').value;
+            if (url.includes('raw.githubusercontent.com')) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById('output').textContent = data;
+                    })
+                    .catch(error => {
+                        document.getElementById('output').textContent = 'Error: ' + error.message;
+                    });
+            } else {
+                document.getElementById('output').textContent = 'Please enter a valid raw.githubusercontent.com link.';
+            }
+        });
+    </script>
+</body>
+</html>
