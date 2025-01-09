@@ -1,6 +1,6 @@
 # SimpleScript
 
-SimpleScript is a very simple and sleek code language meant for beginners with a simple setup and easy code process.
+SimpleScript is a very simple and sleek web development language meant for beginners with a simple setup and easy code process.
 
 ## Installation
 
