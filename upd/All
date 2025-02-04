@@ -1,0 +1,60 @@
+import os
+import requests
+import wikipediaapi
+from pathlib import Path
+
+# Define the path to save the wiki files (Desktop > wiki folder)
+desktop_path = Path.home() / 'Desktop' / 'wiki'
+
+# Ensure the directory exists
+desktop_path.mkdir(parents=True, exist_ok=True)
+
+# Initialize the Wikipedia API
+wiki_wiki = wikipediaapi.Wikipedia('en')
+
+# Function to get pages by category
+def get_category_pages(category_name):
+    category = wiki_wiki.page(category_name)
+    pages = []
+
+    # Wikipedia categorization pages have subcategories, so we need to check if there are subcategories
+    if category.exists():
+        print(f"Fetching pages in category: {category_name}")
+        for subcategory in category.categories.values():
+            pages.extend(get_category_pages(subcategory.title))  # Recursively fetch pages from subcategories
+        for link in category.links.values():
+            pages.append(link)
+
+    return pages
+
+# Function to download a page and save it to the folder
+def download_page(page_name, category_folder):
+    page = wiki_wiki.page(page_name)
+    if page.exists():
+        # Create a sanitized file path
+        page_name_sanitized = page_name.replace('/', '_')  # Replace any invalid file characters
+        file_path = category_folder / f"{page_name_sanitized}.txt"
+
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(page.text)
+        print(f"Downloaded: {page_name}")
+    else:
+        print(f"Page not found: {page_name}")
+
+# Main function
+def download_wiki_by_category():
+    categories = ['Category:Physics', 'Category:Mathematics', 'Category:Biology']  # Example categories
+    for category_name in categories:
+        # Create a folder for each category
+        category_folder = desktop_path / category_name.replace('Category:', '').strip().replace(' ', '_')
+        category_folder.mkdir(parents=True, exist_ok=True)
+
+        # Get pages for the category
+        pages = get_category_pages(category_name)
+
+        # Download each page in the category
+        for page in pages:
+            download_page(page.title, category_folder)
+
+if __name__ == '__main__':
+    download_wiki_by_category()
