@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update a File on GitHub</title>
+</head>
+<body>
+    <h1>Update a File on GitHub</h1>
+
+    <button id="updateFileBtn">Update File</button>
+
+    <script>
+        const username = 'your_github_username';  // Replace with your username
+        const repo = 'your_repo_name';  // Replace with your repo name
+        const token = 'your_personal_access_token';  // Replace with your personal access token
+        const branch = 'main';  // Replace with your branch name
+        const filePath = 'existingfile.txt';  // Replace with the file you want to update
+        const newContent = 'This is the updated content!';  // New content for the file
+
+        document.getElementById('updateFileBtn').addEventListener('click', async function() {
+            const url = `https://api.github.com/repos/${username}/${repo}/contents/${filePath}`;
+
+            // Fetch file info to get SHA
+            const fileInfoResponse = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (fileInfoResponse.ok) {
+                const fileInfo = await fileInfoResponse.json();
+                const sha = fileInfo.sha;  // Get SHA for file
+
+                // Base64 encode the new content
+                const encodedContent = btoa(newContent);
+
+                const data = {
+                    message: 'Update the file with new content',
+                    content: encodedContent,
+                    sha: sha,
+                    branch: branch
+                };
+
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('File updated successfully!');
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
+                }
+            } else {
+                const errorData = await fileInfoResponse.json();
+                alert('Error fetching file info: ' + errorData.message);
+            }
+        });
+    </script>
+</body>
+</html>
