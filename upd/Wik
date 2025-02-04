@@ -1,0 +1,73 @@
+import wikipediaapi
+import os
+import re
+from pathlib import Path
+
+# Function to download Wikipedia pages and save them as text files
+def download_wikipedia_pages(output_folder, top_pages):
+    wiki_wiki = wikipediaapi.Wikipedia('en')  # Wikipedia API for English
+    
+    # Ensure the output folder exists
+    Path(output_folder).mkdir(parents=True, exist_ok=True)
+    
+    for title in top_pages:
+        page = wiki_wiki.page(title)
+        if page.exists():
+            # Create a filename for the article (replacing spaces with underscores)
+            filename = f"{title.replace(' ', '_')}.txt"
+            file_path = os.path.join(output_folder, filename)
+            
+            # Write the content to a file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(page.text)
+            print(f"Downloaded: {title}")
+        else:
+            print(f"Page not found: {title}")
+
+# Function to search for a word in the downloaded articles
+def search_word_in_articles(output_folder, search_word):
+    matches = []
+    
+    # Loop through all files in the folder
+    for file_name in os.listdir(output_folder):
+        file_path = os.path.join(output_folder, file_name)
+        
+        if file_name.endswith('.txt'):
+            with open(file_path, 'r', encoding='utf-8') as file:
+                content = file.read()
+                if re.search(r'\b' + re.escape(search_word) + r'\b', content, re.IGNORECASE):
+                    matches.append(file_name.replace('.txt', ''))
+    
+    if matches:
+        print(f"Found the word '{search_word}' in the following articles:")
+        for match in matches:
+            print(f"- {match}")
+    else:
+        print(f"No articles found containing the word '{search_word}'.")
+
+# Main script
+def main():
+    # Get the Desktop path (works on Windows, macOS, Linux)
+    desktop = Path.home() / 'Desktop'
+    
+    # Folder to store the Wikipedia text files
+    output_folder = desktop / 'Wikipedia_Top_Articles'
+    
+    # List of top Wikipedia articles (this is just a small sample)
+    # Ideally, you would get this list from an API or a Wikipedia dump
+    top_pages = [
+        "Python (programming language)", "Machine learning", "Artificial intelligence",
+        "Deep learning", "Data science", "Computer science", "Natural language processing"
+    ]
+    
+    # Step 1: Download Wikipedia pages
+    download_wikipedia_pages(output_folder, top_pages)
+    
+    # Step 2: Ask the user for a search word
+    search_word = input("Enter a word to search in the downloaded articles: ").strip()
+    
+    # Step 3: Search for the word in the downloaded articles
+    search_word_in_articles(output_folder, search_word)
+
+if __name__ == "__main__":
+    main()
