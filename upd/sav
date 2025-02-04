@@ -1,1 +1,59 @@
+import os
+import time
+import requests
+import git
+from pathlib import Path
 
+# Configuration - set the repo URL and folder path to save the files
+REPO_URL = 'https://github.com/your_username/your_repo_name.git'  # Change to your GitHub repo URL
+LOCAL_REPO_DIR = 'your_local_repo_directory'  # Directory to clone the repo into (e.g., "repo" on desktop)
+SAVE_DIR = 'your_local_folder_to_save_files'  # Directory to save files (e.g., a folder on your Desktop or external drive)
+
+# Ensure the save directory exists
+save_dir_path = Path(SAVE_DIR)
+save_dir_path.mkdir(parents=True, exist_ok=True)
+
+# Function to clone the repo (if not already cloned)
+def clone_repo():
+    if not os.path.exists(LOCAL_REPO_DIR):
+        print(f"Cloning the repo from {REPO_URL}...")
+        git.Repo.clone_from(REPO_URL, LOCAL_REPO_DIR)
+    else:
+        print("Repo already cloned!")
+
+# Function to download all files from the repo
+def download_files_from_repo():
+    repo = git.Repo(LOCAL_REPO_DIR)
+    # Get the list of all files in the repository (including files in subdirectories)
+    files_in_repo = [item.a_path for item in repo.tree().traverse() if item.type == 'blob']
+
+    for file_path in files_in_repo:
+        # Prepare the local path where the file will be saved
+        local_file_path = save_dir_path / file_path
+
+        # Create parent directories if they do not exist
+        local_file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Fetch the file content using the GitHub raw URL
+        raw_url = f"https://raw.githubusercontent.com/{REPO_URL.split('/')[-2]}/{REPO_URL.split('/')[-1]}/main/{file_path}"
+        response = requests.get(raw_url)
+
+        if response.status_code == 200:
+            # Save the file, overwriting any existing file
+            with open(local_file_path, 'wb') as f:
+                f.write(response.content)
+            print(f"Downloaded and saved: {file_path}")
+        else:
+            print(f"Failed to fetch {file_path} from the repo.")
+
+# Function to periodically download the files every 5 minutes
+def periodic_download():
+    while True:
+        download_files_from_repo()
+        # Wait for 5 minutes before next download
+        print("Waiting for the next cycle (5 minutes)...")
+        time.sleep(5 * 60)  # Sleep for 5 minutes (300 seconds)
+
+if __name__ == '__main__':
+    clone_repo()  # Ensure the repo is cloned initially
+    periodic_download()  # Start the periodic download loop
