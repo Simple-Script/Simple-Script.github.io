@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a File on GitHub</title>
+</head>
+<body>
+    <h1>Create a File on GitHub</h1>
+
+    <button id="createFileBtn">Create File</button>
+
+    <script>
+        // GitHub API URL to create a file
+        const username = 'Simple-Script';  // Replace with your username
+        const repo = 'web-data';  // Replace with your repo name
+        const token = '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';  // Replace with your personal access token
+        const branch = 'main';  // Replace with your branch name
+        const filePath = 'newfile.txt';  // Replace with the desired file path
+        const content = 'Hello, this is a new file created via the GitHub API!';  // Content of the file
+
+        document.getElementById('createFileBtn').addEventListener('click', async function() {
+            const url = `https://api.github.com/repos/${username}/${repo}/contents/${filePath}`;
+
+            // Base64 encode the content (required by GitHub API)
+            const encodedContent = btoa(content);
+
+            const data = {
+                message: 'Create a new file',
+                content: encodedContent,
+                branch: branch
+            };
+
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                alert('File created successfully!');
+            } else {
+                const errorData = await response.json();
+                alert('Error: ' + errorData.message);
+            }
+        });
+    </script>
+</body>
+</html>
