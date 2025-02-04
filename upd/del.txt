@@ -1,0 +1,38 @@
+import requests
+
+# GitHub credentials
+username = 'your_github_username'
+token = 'your_personal_access_token'
+repo = 'your_repo_name'
+branch = 'main'
+
+# API URL to get the file information
+file_path = 'path/to/your/existingfile.txt'
+url = f'https://api.github.com/repos/{username}/{repo}/contents/{file_path}'
+
+# Make a GET request to get the file info (to retrieve the SHA)
+response = requests.get(url, auth=(username, token))
+
+if response.status_code == 200:
+    file_info = response.json()
+    sha = file_info['sha']  # SHA of the file
+
+    # Data for the delete request
+    data = {
+        "message": "Delete the file",  # Commit message
+        "sha": sha,  # SHA of the file to delete
+        "branch": branch
+    }
+
+    # Make the DELETE request to remove the file
+    delete_response = requests.delete(url, json=data, auth=(username, token))
+
+    if delete_response.status_code == 200:
+        print("File deleted successfully!")
+    else:
+        print(f"Error deleting file: {delete_response.status_code}")
+        print(delete_response.json())
+
+else:
+    print(f"Error fetching file info: {response.status_code}")
+    print(response.json())

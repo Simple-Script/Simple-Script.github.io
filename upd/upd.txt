@@ -1,0 +1,46 @@
+import requests
+import base64
+
+# GitHub credentials
+username = 'your_github_username'
+token = 'your_personal_access_token'
+repo = 'your_repo_name'
+branch = 'main'
+
+# API URL to get the file information
+file_path = 'path/to/your/existingfile.txt'
+url = f'https://api.github.com/repos/{username}/{repo}/contents/{file_path}'
+
+# Make a GET request to get the file info (to retrieve the SHA)
+response = requests.get(url, auth=(username, token))
+
+if response.status_code == 200:
+    file_info = response.json()
+    sha = file_info['sha']  # SHA of the file
+
+    # New content to update the file
+    new_content = "Hello, this file has been updated!"
+
+    # Encode content in base64
+    encoded_content = base64.b64encode(new_content.encode()).decode()
+
+    # Data for the update request
+    data = {
+        "message": "Update the existing file",  # Commit message
+        "content": encoded_content,  # Base64 encoded content
+        "sha": sha,  # SHA of the file to update
+        "branch": branch
+    }
+
+    # Make the PUT request to update the file
+    update_response = requests.put(url, json=data, auth=(username, token))
+
+    if update_response.status_code == 200:
+        print("File updated successfully!")
+    else:
+        print(f"Error updating file: {update_response.status_code}")
+        print(update_response.json())
+
+else:
+    print(f"Error fetching file info: {response.status_code}")
+    print(response.json())
