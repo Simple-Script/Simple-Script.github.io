@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Language Interpreter</title>
+</head>
+<body>
+    <h1>Simple Language Interpreter</h1>
+    
+    <!-- Code input area where user writes the script -->
+    <textarea id="code" rows="10" cols="50" placeholder="Write your code here..."></textarea><br><br>
+    <button onclick="RUN_CODE()">Run Code</button>
+
+    <h3>Output:</h3>
+    <pre id="output"></pre>
+
+    <h3>Language Documentation:</h3>
+    <pre>
+This is a simple language interpreter with the following commands:
+
+1. SET <variable> = <value>
+   - Assigns a value to a variable.
+   - Example: SET x = 5 assigns the value 5 to the variable x.
+   - You can assign strings, numbers, or expressions.
+   - Example: SET message = "Hello"
+
+2. PRINT <expression>
+   - Prints the result of an expression to the output.
+   - You can print variables, strings, and the result of operations like +, -, *, /.
+   - Example: PRINT x + 10 will print the value of x + 10.
+
+3. LOOP <times> <command>
+   - Repeats a command a specified number of times.
+   - Example: LOOP 3 PRINT "HI" will print "HI" three times.
+
+4. IF <condition> THEN <action> ELSE <action>
+   - Executes one action if the condition is true, another action if the condition is false.
+   - Conditions can be expressions like x > y, x == 5, etc.
+   - Example: IF x > 0 THEN PRINT "Positive" ELSE PRINT "Negative"
+
+Supported Operators:
+- +: Addition
+- -: Subtraction
+- *: Multiplication
+- /: Division
+
+Variables can be used within expressions and can store strings or numbers.
+
+Example Program:
+
+SET x = 5
+SET y = 10
+PRINT x + y  // Output: 15
+IF x > 0 THEN PRINT "Positive" ELSE PRINT "Negative"  // Output: Positive
+LOOP 3 PRINT "HI"  // Output: HI HI HI
+    </pre>
+
+    <script>
+        function RUN_CODE() {
+            let code = document.getElementById("code").value;
+            let output = document.getElementById("output");
+            output.textContent = ""; // Clear previous output
+
+            try {
+                let VARIABLES = {};  // Store variable names and their values
+
+                // Function to print the value to the output
+                function PRINT(value) {
+                    output.textContent += value + ' ';
+                }
+
+                // Function to evaluate mathematical expressions and variable references
+                function evaluateExpression(expression) {
+                    // Replace variable references with actual values from VARIABLES object
+                    let exprWithValues = expression.replace(/\b([a-zA-Z_]\w*)\b/g, function(match) {
+                        return VARIABLES[match] !== undefined ? VARIABLES[match] : match;
+                    });
+
+                    // Return the evaluated expression
+                    return eval(exprWithValues);
+                }
+
+                // Function to run the code
+                function RUN(code) {
+                    let lines = code.split('\n');
+
+                    for (let line of lines) {
+                        line = line.trim();
+
+                        // SET command: Assigns a value to a variable
+                        if (line.startsWith('SET ')) {
+                            let parts = line.slice(4).split('=');
+                            let varName = parts[0].trim();
+                            let value = parts[1].trim();
+
+                            // Check if the value is a number or a string
+                            if (value.startsWith('"') && value.endsWith('"')) {
+                                VARIABLES[varName] = value.slice(1, -1);  // Assign string
+                            } else {
+                                VARIABLES[varName] = evaluateExpression(value);  // Assign number or expression result
+                            }
+                        }
+                        // PRINT command: Outputs the value to the screen
+                        else if (line.startsWith('PRINT ')) {
+                            let value = line.slice(6).trim();
+
+                            if (value.startsWith('"') && value.endsWith('"')) {
+                                PRINT(value.slice(1, -1));  // Print string without quotes
+                            } else {
+                                PRINT(evaluateExpression(value));  // Evaluate and print expression result
+                            }
+                        }
+                        // LOOP command: Repeats an action multiple times
+                        else if (line.startsWith('LOOP ')) {
+                            let parts = line.slice(5).split(' ');
+                            let times = parseInt(parts[0].trim());
+                            let action = parts.slice(1).join(' ').trim();
+                            for (let i = 0; i < times; i++) {
+                                RUN(action);
+                            }
+                        }
+                        // IF-THEN-ELSE command: Conditional execution
+                        else if (line.startsWith('IF ')) {
+                            let condition = line.slice(3, line.indexOf('THEN')).trim();
+                            let thenAction = line.slice(line.indexOf('THEN') + 4, line.indexOf('ELSE')).trim();
+                            let elseAction = line.slice(line.indexOf('ELSE') + 4).trim();
+                            if (evaluateExpression(condition)) {
+                                RUN(thenAction);
+                            } else {
+                                RUN(elseAction);
+                            }
+                        }
+                    }
+                }
+
+                RUN(code);
+
+            } catch (error) {
+                output.textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
