@@ -1,0 +1,159 @@
+class MiniLangInterpreter {
+  constructor() {
+    this.variables = {};
+  }
+
+  // Main method to execute the code
+  execute(code) {
+    // Split the code into individual statements
+    const statements = code.split(' THEN ');
+
+    // Loop through all statements to interpret
+    statements.forEach(statement => {
+      this.interpret(statement.trim());
+    });
+  }
+
+  // Interpret a single line of code
+  interpret(line) {
+    // Handle SET commands (Variable assignments)
+    if (line.startsWith('SET')) {
+      this.handleSet(line);
+    }
+    // Handle PRINT commands
+    else if (line.startsWith('PRINT')) {
+      this.handlePrint(line);
+    }
+    // Handle IF-ELSE statements
+    else if (line.startsWith('IF')) {
+      this.handleIf(line);
+    }
+    // Handle LOOPS
+    else if (line.startsWith('LOOP')) {
+      this.handleLoop(line);
+    }
+    // Handle STDIN (user input)
+    else if (line.startsWith('STDIN')) {
+      this.handleInput(line);
+    }
+  }
+
+  // Handle variable assignment (SET)
+  handleSet(line) {
+    const regex = /SET\s+(\w+)\s*=\s*(.+)/;
+    const match = line.match(regex);
+    if (match) {
+      const varName = match[1];
+      const expression = match[2].trim();
+      this.variables[varName] = this.evaluateExpression(expression);
+    }
+  }
+
+  // Handle PRINT command (print variables or string literals)
+  handlePrint(line) {
+    const regex = /PRINT\s+(.+)/;
+    const match = line.match(regex);
+    if (match) {
+      const expression = match[1].trim();
+      if (expression.startsWith('[') && expression.endsWith(']')) {
+        console.log(expression.slice(1, -1)); // Print literal string
+      } else {
+        console.log(this.variables[expression] || expression); // Print variable or raw expression
+      }
+    }
+  }
+
+  // Handle IF condition (IF ... THEN ... ELSE)
+  handleIf(line) {
+    const regex = /IF\s+(.+?)\s+THEN\s+(.+?)\s+ELSE\s+(.+)/;
+    const match = line.match(regex);
+    if (match) {
+      const condition = match[1].trim();
+      const trueBranch = match[2].trim();
+      const falseBranch = match[3].trim();
+
+      if (this.evaluateCondition(condition)) {
+        this.interpret(trueBranch);
+      } else {
+        this.interpret(falseBranch);
+      }
+    }
+  }
+
+  // Handle LOOP (LOOP ... THEN ...)
+  handleLoop(line) {
+    const regex = /LOOP\s+(.+?)\s+THEN\s+(.+)/;
+    const match = line.match(regex);
+    if (match) {
+      const condition = match[1].trim();
+      const body = match[2].trim();
+
+      while (this.evaluateCondition(condition)) {
+        this.interpret(body);
+      }
+    }
+  }
+
+  // Handle user input (STDIN)
+  handleInput(line) {
+    const regex = /STDIN\s+PRINT\s+\[(.+)\]/;
+    const match = line.match(regex);
+    if (match) {
+      const promptMessage = match[1];
+      const userInput = prompt(promptMessage);
+      this.variables['STDIN'] = userInput;
+    }
+  }
+
+  // Evaluate a condition or expression
+  evaluateCondition(condition) {
+    // Evaluate simple arithmetic and comparison expressions
+    const operators = ['==', '!=', '<', '>', '<=', '>=', '+', '-', '*', '/'];
+    let expression = condition;
+
+    // Replace variables with their values
+    for (const [varName, value] of Object.entries(this.variables)) {
+      expression = expression.replace(new RegExp(`\\b${varName}\\b`, 'g'), value);
+    }
+
+    // Evaluate using eval (simplified for this purpose)
+    try {
+      return eval(expression);  // Use with caution in production code
+    } catch (e) {
+      console.error(`Error evaluating condition: ${e}`);
+      return false;
+    }
+  }
+
+  // Evaluate expressions (used for assignments and conditions)
+  evaluateExpression(expression) {
+    // Replace variables in the expression
+    for (const [varName, value] of Object.entries(this.variables)) {
+      expression = expression.replace(new RegExp(`\\b${varName}\\b`, 'g'), value);
+    }
+
+    // Evaluate the final expression (use eval cautiously)
+    try {
+      return eval(expression);  // This is unsafe in general but works for this example
+    } catch (e) {
+      console.error(`Error evaluating expression: ${e}`);
+      return null;
+    }
+  }
+}
+
+// Example usage
+const interpreter = new MiniLangInterpreter();
+
+// The code to be executed
+const code = `
+  SET x = 5
+  SET message = Hello
+  PRINT message
+  IF x == 5 THEN PRINT [x is five] ELSE PRINT [x is not five]
+  LOOP x > 0 THEN SET x = x - 1 PRINT [Counting down] ELSE PRINT [Done]
+  STDIN PRINT [How old are you?]
+  IF STDIN < 0 PRINT [YOU'RE LYING] ELSE PRINT [Your age is] STDIN
+`;
+
+interpreter.execute(code);
