@@ -1,3 +1,4 @@
+TO func e.g. 1 TO 3
 Write a Turing complete language in html and js. The language should use SET, PRINT, IF, ELSE, THEN and LOOP statements. There should be support for all operators. The user can type variables and print them or use them in any loop.
 add a func that can call on like a var 
 rand math lua local global maybe
